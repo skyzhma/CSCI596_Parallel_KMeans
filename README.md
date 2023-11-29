@@ -6,6 +6,9 @@ This repository is mainly about parallelizing KMeans algorithm.
 
 KMeans is a popular clustering algorithm used in unsupervised learning tasks. Suppose that a dataset has N data points and the major goal of the KMeans algorithm is to partition it into K clusters where K is a hyper parameter. 
 
+![](./Kmeans.gif)
+
+## Steps
 1. Randomly initialize K cluster centriods
 2. For each data point, compute its Euclidean distance to the centriods and assign the data point to the cluster whose centroid is the cloest
 3. Recalculate the centroid of each cluster by averaging all the data points in that cluster
@@ -15,7 +18,7 @@ KMeans is a popular clustering algorithm used in unsupervised learning tasks. Su
 In step 2, we need to devide the cloest centroid for each data points. Since the centroid are determined, we can create multiple threads and each thread will compute the distance for some data points at the same time. 
 
 * Small Scale : We decide to use OpenMP to implement the parallelization. 
-* Large Scale : We decide to use MPI + OpenMP to parallelize the algorithm. The master will store the centroids and pass it to multiple workers. Each worker will handle a part of the dataset, compute the distance for each data point and pass the sum of the distance to each centroid to the master.
+* Large Scale : We decide to use MPI + OpenMP to parallelize the algorithm. The master will store the centroids and pass it to multiple workers. Each worker will handle a part of the dataset, compute the distance for each data point. Master and works will share the information of the centroids.
 
 We will randomly generate the datasets for training
 
