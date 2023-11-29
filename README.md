@@ -1,3 +1,7 @@
-# Parallel K-Means Data Clustering
+# CSCI596-Final-Project
 
-This repository is about to create a CUDA implementation of the KMeans algorithm. Instead of implementing a sequential KMeans algorithm from scratch, we decided to make use of the open source implementation provided by [Wei-keng Liao](http://users.ece.northwestern.edu/~wkliao/Kmeans/index.html) so that we can be more focused on the CUDA implementation.
+This repository is mainly about parallizing KMeans algorithm.
+
+# Introduction to the KMeans Algorithm
+
+KMeans is a popular clustering algorithm used in unsupervised learning tasks. Suppose that a dataset has N data points and the major goal of the KMeans algorithm is to partition it into K clusters where K is a hyper parameter. 
