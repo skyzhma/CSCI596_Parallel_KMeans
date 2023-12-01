@@ -8,10 +8,15 @@ int main(int argc, char **argv) {
     int         opt;
     int         numDims;              // number of vector dimensions
     int         numObjs;              // number of data points
-    std::string filePath;             // path of the data
-    bool        del;                  // to delete the data file or not
+    std::string filePath;             // path of the dataset
+    bool        del;                  // to delete the dataset or not
 
-    del = true;
+    // Default values
+    del = false;
+    filePath = "data";
+    numObjs = 10000;
+    numDims = 64;
+
     // Parse Args
     while ((opt = getopt(argc, argv, "d:o:p:g:")) != -1) {
         switch (opt) {
@@ -26,7 +31,7 @@ int main(int argc, char **argv) {
                 break;
             case 'g':
                 if (atoi(optarg)) {
-                    del = false;
+                    del = true;
                 }
         }
     }

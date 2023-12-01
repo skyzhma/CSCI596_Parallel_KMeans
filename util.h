@@ -11,11 +11,21 @@
         name[i] = name[i-1] + yDim;                         \
 } while (0)
 
+#define free2D(name, xDim) do {               \
+    for (size_t i = 1; i < xDim; i++)         \
+        free(name[i]);                        \
+    free(name);                               \
+} while (0)
+
 void generate_data(const std::string &filePath, const int &numObjs, const int &numDims);
 
 void delete_data(const std::string &filePath, const int &numObjs, const int &numDims);
 
+void read_data(const std::string &filePath, float **data);
+
 void generate_file_name(std::string &filePath, const int &numObjs, const int &numDims);
+
+void read_file_name(const std::string &fileName, int &numObjs, int &numDims);
 
 void seperate_data(const std::string &filePath, int numDivisions);
 
