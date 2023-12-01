@@ -29,7 +29,7 @@ We will randomly generate the datasets for training
 * MPI + OpenMP Implementation
 
 ##  Results
-* Compare the performance Sequential with the OpenMP Implementation with various size of dataset as input.
-* Compare the performance of OpenMP implementations with different number of thread settings
-* Compare the performance of MPI+OpenMP implementations with different number of node settings and various size of datasets.
+* Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
+* Compare the performance of OpenMP implementations with different number of thread settings.
+* Compare the performance of MPI+OpenMP implementation with different number of node settings and various size of datasets.
 
