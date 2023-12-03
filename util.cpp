@@ -5,23 +5,22 @@
 #include "util.h"
 
 
-void generate_data(const std::string &filePath, const int &numObjs, const int &numDims) {
+void generate_data(string filePath, int numObjs, int numDims) {
 
     // Use a random device to seed the random number generator
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    random_device rd;
+    mt19937 gen(rd());
 
-    // Generate random floating-point numbers in the range [0.0, 1.0]
-    std::uniform_real_distribution<double> doubleDistribution(0.0, 1.0);
-    std::uniform_real_distribution<float> floatDistribution(-10, 10);
-    std::uniform_int_distribution intDistribution(-10, 10);
+    // Generate random doubleing-point numbers in the range [0.0, 1.0]
+    uniform_real_distribution<double> doubleDistribution(-20, 20);
+    uniform_int_distribution intDistribution(-10, 10);
 
     // Open a file for writing
-    std::string fileName = filePath;
+    string fileName = filePath;
     generate_file_name(fileName, numObjs, numDims);
-    std::ofstream outputFile(fileName);
+    ofstream outputFile(fileName);
     if (!outputFile.is_open()) {
-        std::cerr << "Error opening the file for writing." << std::endl;
+        cerr << "Error opening the file for writing." << endl;
     }
 
     // Store the generated numbers in a txt file
@@ -35,91 +34,85 @@ void generate_data(const std::string &filePath, const int &numObjs, const int &n
     // Close the file
     outputFile.close();
 
-    std::cout << "Random numbers have been written to " << fileName << "\n";
+    cout << "Random numbers have been written to " << fileName << "\n";
 
 }
 
-void delete_data(const std::string &filePath, const int &numObjs, const int &numDims) {
+void delete_data(string filePath, int numObjs, int numDims) {
 
-    std::string fileName = filePath;
+    string fileName = filePath;
     generate_file_name(fileName, numObjs, numDims);
 
-    if (std::remove(fileName.c_str()) != 0) {
-        std::cerr << "Error deleting file: " << fileName << std::endl;
+    if (remove(fileName.c_str()) != 0) {
+        cerr << "Error deleting file: " << fileName << endl;
     } else {
-        std::cout << "File deleted successfully: " << fileName << std::endl;
+        cout << "File deleted successfully: " << fileName << endl;
     }   
 }
 
-void read_data(const std::string &filePath, float **data) {
+void read_data(string filePath, double **data) {
     
-    int numObjs, numDims;
-    read_file_name(filePath, numObjs, numDims);
-
-    malloc2D(data, numObjs, numDims, float);
-
-    std::ifstream inputFile(filePath);
+    ifstream inputFile(filePath);
     if (inputFile.is_open()) {
-        std::string line;
+        string line;
         int i = 0;
-        while (std::getline(inputFile, line)) {
-            
-            std::istringstream iss(line);
+        while (getline(inputFile, line)) {
 
-            // Read three float numbers from each line
+            istringstream iss(line);
+
+            // Read double numbers from each line
             int j = 0;
-            float num;
+            double num;
             while (iss >> num) {
                 data[i][j++] = num;
             }
 
-            j = 0;
             i++;
         }
 
         inputFile.close();
 
         // Print the content of the 2D array
-        for (int i = 0; i < numObjs; i++) {
-            for (int j = 0; j < numDims; j++) {
-                std::cout << data[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
+        // for (int i = 0; i < numObjs; i++) {
+        //     for (int j = 0; j < numDims; j++) {
+        //         cout << data[i][j] << " ";
+        //     }
+        //     cout << endl;
+        // }
 
-        free2D(data, numObjs);
+        // free2D(data, numObjs);
         
     } else {
-        std::cerr << "Error opening the file for reading." << std::endl;
+        cerr << "Error opening the file for reading." << endl;
     }
 
 
 }
 
-void generate_file_name(std::string &filePath, const int &numObjs, const int &numDims) {
-    filePath = filePath + "-" + std::to_string(numObjs) + "-" + std::to_string(numDims) + ".txt";
+void generate_file_name(string &filePath, int numObjs, int numDims) {
+    filePath = filePath + "-" + to_string(numObjs) + "-" + to_string(numDims) + ".txt";
 }
 
-void read_file_name(const std::string &fileName, int &numObjs, int &numDims) {
+void read_file_name(string &fileName, int &numObjs, int &numDims) {
     
     size_t firstDashPos = fileName.find('-');
     size_t secondDashPos = fileName.find('-', firstDashPos + 1);
-    assert(firstDashPos != std::string::npos);
-    assert(secondDashPos != std::string::npos);
+    assert(firstDashPos != string::npos);
+    assert(secondDashPos != string::npos);
 
-    std::string numObjsStr = fileName.substr(firstDashPos + 1, secondDashPos - firstDashPos - 1);
-    std::string numDimsStr = fileName.substr(secondDashPos + 1, fileName.size() - secondDashPos - 5); // "-.txt" has 5 characters
+    string numObjsStr = fileName.substr(firstDashPos + 1, secondDashPos - firstDashPos - 1);
+    string numDimsStr = fileName.substr(secondDashPos + 1, fileName.size() - secondDashPos - 5); // "-.txt" has 5 characters
 
-    std::istringstream(numObjsStr) >> numObjs;
-    std::istringstream(numDimsStr) >> numDims;
+    istringstream(numObjsStr) >> numObjs;
+    istringstream(numDimsStr) >> numDims;
 
 }
 
-// void seperate_data(const std::string &filePath, int numDivisions);
+// void seperate_data(string &filePath, int numDivisions);
 
-float compute_euclid(int numDimension, float *coord1, float *coord2) {
+double compute_euclid(int numDimension, double *coord1, double *coord2) {
 
-    float dis = .0f;
+    double dis = .0f;
 
     for (int i = 0; i < numDimension; i++) {
         dis += (coord1[i] - coord2[i]) * (coord1[i] - coord2[i]);

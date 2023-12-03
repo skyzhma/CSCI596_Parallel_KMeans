@@ -1,8 +1,10 @@
-#include<stdio.h>
+#include <iostream>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <omp.h>
+#include "kmeans.h"
 #include "util.h"
-
 
 int main(int argc, char **argv) {
     
@@ -10,11 +12,27 @@ int main(int argc, char **argv) {
     int     numClusters;          // number of clusters
     int     numNodes;             // number of nodes
     int     numThreads;           // number of threads
-    int     numDims;              // number of vector dimensions
     int     numObjs;              // number of data points 
+    int     numDims;              // number of vector dimensions
+    int     maxIter;              // number of maximum iterations
+    double  threshold;            // iteration threshold;
+    int     *label;               // store the label of each data point
+    double  **data;               // store the datasets
+    double  **centers;            // coord of new centers
+    string  filePath;             // fileName of dataset
+
+    // Default Values
+    numClusters = 4;
+    numNodes = 0;
+    numThreads = 0;
+    numObjs = 10000;
+    numDims = 64;
+    filePath = "data-10000-64.txt";
+    maxIter = 500;
+    threshold = .001;
 
     // Parse Args
-    while ((opt = getopt(argc, argv, "k:n:t:d:o:")) != -1) {
+    while ((opt = getopt(argc, argv, "k:n:t:d:o:s:")) != -1) {
         switch (opt) {
             case 'k':
                 numClusters = atoi(optarg);
@@ -31,20 +49,58 @@ int main(int argc, char **argv) {
             case 'o':
                 numObjs=atoi(optarg);
                 break;
+            case 's':
+                filePath = optarg;
+                break;
         }
     }
 
-    // Randomly Generate Data
+    // Initialize data
+    malloc1D(label, numObjs, int);
+    malloc2D(data, numObjs, numDims, double);
+    malloc2D(centers, numClusters, numDims, double);
 
-    // Separate Data
+    // Read Data
+    read_file_name(filePath, numObjs, numDims);
+    read_data(filePath, data);
 
     // Initialize Centroids
+    for (int i = 0; i < numClusters; i++) {
+        for (int j = 0; j < numDims; j++) {
+            centers[i][j] = data[i][j];
+        }
+    }
 
-    // Set timing 
+    // Set timing
+    double stime = omp_get_wtime();
 
-    // Iteration
+    // Implementation of Algorithm
+    sequential(numClusters,
+                numObjs,
+                numDims,
+                maxIter,
+                threshold,
+                label,
+                data,
+                centers
+                );
+        
+    for (int i = 0; i < numClusters; i++) {
+        std::cout << i << " cetroid ";
+        for (int j = 0; j < numDims; j ++) {
+           std::cout << centers[i][j] << " ";
+        }
+        std::cout << endl;
+    }
 
     // Output
+    double etime = omp_get_wtime();
+    cout << "Total time :" << etime - stime << endl;
+
+    // free memory
+    free1D(label);
+    free2D(data, numObjs);
+    free2D(centers, numClusters);
 
     return 0;
 }
