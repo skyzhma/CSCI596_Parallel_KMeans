@@ -60,6 +60,8 @@ int main(int argc, char **argv) {
     malloc2D(data, numObjs, numDims, double);
     malloc2D(centers, numClusters, numDims, double);
 
+    for (int i=0; i < numObjs; i++) label[i] = -1;
+
     // Read Data
     read_file_name(filePath, numObjs, numDims);
     read_data(filePath, data);
@@ -75,15 +77,29 @@ int main(int argc, char **argv) {
     double stime = omp_get_wtime();
 
     // Implementation of Algorithm
-    sequential(numClusters,
-                numObjs,
-                numDims,
-                maxIter,
-                threshold,
-                label,
-                data,
-                centers
-                );
+
+    if (numThreads > 0){
+        omp_set_num_threads(numThreads);
+        omp(numClusters,
+                    numObjs,
+                    numDims,
+                    maxIter,
+                    threshold,
+                    label,
+                    data,
+                    centers
+                    );
+    } else {
+        sequential(numClusters,
+            numObjs,
+            numDims,
+            maxIter,
+            threshold,
+            label,
+            data,
+            centers
+            );   
+    }
         
     for (int i = 0; i < numClusters; i++) {
         std::cout << i << " cetroid ";
@@ -99,8 +115,8 @@ int main(int argc, char **argv) {
 
     // free memory
     free1D(label);
-    free2D(data, numObjs);
-    free2D(centers, numClusters);
+    free2D(data);
+    free2D(centers);
 
     return 0;
 }
