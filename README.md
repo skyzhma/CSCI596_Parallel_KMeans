@@ -22,22 +22,25 @@ In step 2, we need to devide the cloest centroid for each data points. Since the
 
 We will randomly generate the datasets for training
 
-# Todo
+# Implementation
+
+## Dataset Generation
+```
+g++ data.cpp util.cpp -o data
+./data -o {number of data points} -d {number of dimensions}
+```
 
 ## Sequential and OpenMP Implementation
-* Compile program
 ```
 g++ main.cpp util.cpp kmeans.cpp -o main
-```
 
-* Execute Sequential Program
-```
 ./main
-```
 
-* Execute OpenMP Program (Add a -t command arg)
-```
+# Add a -t command arg to use openmp
 ./main -t {number of threads}
+
+# Add a -s command arg to specify dataset
+./main -t {number of threads} -s data-1000-32.txt
 ```
 
 ## MPI Implementation
@@ -46,16 +49,13 @@ g++ main.cpp util.cpp kmeans.cpp -o main
 export LD_PRELOAD=/spack/apps/gcc/8.3.0/lib64/libstdc++.so.6
 ```
 
-* Compile program
+* Compile and Execute program
 ```
 mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -o mpi_main
-```
-
-* Execute program
-```
 mpiexec -n ${number of processes} ./mpi_kmeans
-```
 
+# use -s to specify the dataset
+```
 ##  Results
 * Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
 * Compare the performance of OpenMP implementations with different number of thread settings.
