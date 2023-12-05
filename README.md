@@ -23,14 +23,37 @@ In step 2, we need to devide the cloest centroid for each data points. Since the
 We will randomly generate the datasets for training
 
 # Todo
-## Code
-* Sequential KMeans Implentation
-* OpenMP Implementation
 
-### MPI Implementation
-Before compiling the program, run the following command in your CARC terminal
+## Sequential and OpenMP Implementation
+* Compile program
+```
+g++ main.cpp util.cpp kmeans.cpp -o main
+```
+
+* Execute Sequential Program
+```
+./main
+```
+
+* Execute OpenMP Program (Add a -t command arg)
+```
+./main -t {number of threads}
+```
+
+## MPI Implementation
+* Before compiling the program, run the following command in your CARC terminal
 ```
 export LD_PRELOAD=/spack/apps/gcc/8.3.0/lib64/libstdc++.so.6
+```
+
+* Compile program
+```
+mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -o mpi_main
+```
+
+* Execute program
+```
+mpiexec -n ${number of processes} ./mpi_kmeans
 ```
 
 ##  Results
