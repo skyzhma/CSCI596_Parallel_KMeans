@@ -26,7 +26,12 @@ We will randomly generate the datasets for training
 ## Code
 * Sequential KMeans Implentation
 * OpenMP Implementation
-* MPI + OpenMP Implementation
+
+### MPI Implementation
+Before compiling the program, run the following command in your CARC terminal
+```
+export LD_PRELOAD=/spack/apps/gcc/8.3.0/lib64/libstdc++.so.6
+```
 
 ##  Results
 * Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
