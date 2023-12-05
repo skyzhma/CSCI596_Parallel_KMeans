@@ -32,7 +32,7 @@ g++ data.cpp util.cpp -o data
 
 ## Sequential and OpenMP Implementation
 ```
-g++ main.cpp util.cpp kmeans.cpp -o main
+g++ main.cpp util.cpp kmeans.cpp -fopenmp -lm -o main
 
 ./main
 
