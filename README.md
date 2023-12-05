@@ -55,6 +55,7 @@ mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -o mpi_main
 mpiexec -n ${number of processes} ./mpi_main
 
 # use -s to specify the dataset
+mpiexec -n ${number of processes} ./mpi_main -s {name of dataset}
 ```
 ##  Results
 * Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
