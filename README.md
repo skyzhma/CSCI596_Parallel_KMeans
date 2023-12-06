@@ -34,9 +34,10 @@ g++ data.cpp util.cpp -o data
 ```
 g++ main.cpp util.cpp kmeans.cpp -fopenmp -lm -o main
 
+# Sequential implementation
 ./main
 
-# Add a -t command arg to use openmp
+# Add a -t command arg to use Openmp
 ./main -t {number of threads}
 
 # Add a -s command arg to specify dataset
@@ -52,11 +53,17 @@ export LD_PRELOAD=/spack/apps/gcc/8.3.0/lib64/libstdc++.so.6
 * Compile and Execute program
 ```
 mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -fopenmp -lm -o mpi_main
+
+# MPI implementation
 mpiexec -n ${number of processes} ./mpi_main
 
 # use -s to specify the dataset
 mpiexec -n ${number of processes} ./mpi_main -s {name of dataset}
+
+# use -t to activate OpenMP + MPI
+mpiexec -n ${number of processes} ./mpi_main -s {name of dataset} -t ${number of threads for each process}
 ```
+
 ##  Results
 * Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
 * Compare the performance of OpenMP implementations with different number of thread settings.
