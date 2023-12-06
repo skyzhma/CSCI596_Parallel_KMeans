@@ -51,7 +51,7 @@ export LD_PRELOAD=/spack/apps/gcc/8.3.0/lib64/libstdc++.so.6
 
 * Compile and Execute program
 ```
-mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -o mpi_main
+mpic++ mpi_main.cpp mpi_kmeans.cpp util.cpp -fopenmp -lm -o mpi_main
 mpiexec -n ${number of processes} ./mpi_main
 
 # use -s to specify the dataset
