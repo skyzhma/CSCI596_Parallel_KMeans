@@ -14,7 +14,7 @@ KMeans is a popular clustering algorithm used in unsupervised learning tasks. Su
 3. Recalculate the centroid of each cluster by averaging all the data points in that cluster
 4. Repeat step 2 and 3 until the algorithm converages
 
-# Parallelization
+## Parallelization
 In step 2, we need to devide the cloest centroid for each data points. Since the centroid are determined, we can create multiple threads and each thread will compute the distance for some data points at the same time. 
 
 * Small Scale : We decide to use OpenMP to implement the parallelization. 
@@ -24,6 +24,13 @@ We will randomly generate the datasets for training
 
 # Implementation
 
+## Repository Structure
+- `data.cpp` : generate datasets randomly
+- `util.cpp` : utility functions
+- `kmeans.cpp` : implementation of sequential and OpenMP KMeans algorithm
+- `mpi_kmeans.cpp` : implementation of MPI and hybrid MPI+OpenMP Kmeans algorithm
+- `kemans.sl` : slurm script
+ 
 ## Dataset Generation
 ```
 g++ data.cpp util.cpp -o data
@@ -41,7 +48,10 @@ g++ main.cpp util.cpp kmeans.cpp -fopenmp -lm -o main
 ./main -t {number of threads}
 
 # Add a -s command arg to specify dataset
-./main -t {number of threads} -s data-1000-32.txt
+./main -t {number of threads} -s {name of dataset file}
+
+# Add a -k command arg to the hyper parameter K
+./main -t {number of threads} -s {name of dataset file} -k {K}
 ```
 
 ## MPI Implementation
@@ -62,9 +72,16 @@ mpiexec -n ${number of processes} ./mpi_main -s {name of dataset}
 
 # use -t to activate OpenMP + MPI
 mpiexec -n ${number of processes} ./mpi_main -s {name of dataset} -t ${number of threads for each process}
+
+# use -k to specify the number of clusters
+```
+## Running Jos on CARC
+Modify the setting the submit the job
+```
+sbatch kmeans.sl
 ```
 
-##  Results
+#  Results
 * Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
 * Compare the performance of OpenMP implementations with different number of thread settings.
 * Compare the performance of MPI+OpenMP implementation with different number of node settings and various size of datasets.
