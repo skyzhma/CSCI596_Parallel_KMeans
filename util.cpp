@@ -97,7 +97,15 @@ void read_file_name(string &fileName, int &numObjs, int &numDims) {
 
 }
 
-// void seperate_data(string &filePath, int numDivisions);
+void print_centroids(double **centroids, int numClusters, int numDims) {
+    for (int i = 0; i < 1; i++) {
+        std::cout << i << " cetroid ";
+        for (int j = 0; j < numDims; j ++) {
+           std::cout << centroids[i][j] << " ";
+        }
+        std::cout << endl;
+    }
+}
 
 double compute_euclid(int numDimension, double *coord1, double *coord2) {
 

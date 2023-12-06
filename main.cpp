@@ -23,9 +23,9 @@ int main(int argc, char **argv) {
     // Default Values
     numClusters = 4;
     numThreads = 0;
-    numObjs = 10000;
+    numObjs = 1000;
     numDims = 64;
-    filePath = "data-10000-64.txt";
+    filePath = "data-1000-64.txt";
     maxIter = 500;
     threshold = .001;
 
@@ -98,16 +98,13 @@ int main(int argc, char **argv) {
     }
     
     double etime = omp_get_wtime();
-
-    for (int i = 0; i < 1; i++) {
-        std::cout << i << " cetroid ";
-        for (int j = 0; j < numDims; j ++) {
-           std::cout << centers[i][j] << " ";
-        }
-        std::cout << endl;
-    }
+    
+    // Print out centroid of clusters
+    // print_centroids(centers, numClusters, numDims);
 
     // Output
+    cout << "-----------------------------------------" << endl;
+    cout << (numThreads > 0 ? "OpenMP Implementation" : "Sequential Implementation") << endl;
     cout << "Number of data points: " << numObjs << endl;
     cout << "Number of dimensions: " << numDims << endl;
     cout << "Number of threads: " << numThreads << endl;

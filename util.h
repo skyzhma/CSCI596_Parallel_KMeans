@@ -60,6 +60,6 @@ void generate_file_name(string &filePath, int numObjs, int numDims);
 
 void read_file_name(string &fileName, int &numObjs, int &numDims);
 
-void seperate_data(string filePath, int numDivisions);
+void print_centroids(double **centroids, int numClusters, int numDims);
 
 double compute_euclid(int dimension, double *coord1, double *coord2);

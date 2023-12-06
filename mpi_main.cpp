@@ -152,16 +152,12 @@ int main(int argc, char **argv) {
 
         double etime = MPI_Wtime();
 
-        // Print out the first centroid to make sure the results are consistent with other implementations
-        for (int i = 0; i < 1; i++) {
-            std::cout << i << " cetroid ";
-            for (int j = 0; j < numDims; j ++) {
-            std::cout << clusters[i][j] << " ";
-            }
-            std::cout << endl;
-        }
+        // Print out centroid of clusters
+        // print_centroids(clusters, numClusters, numDims);
 
         // Output
+         cout << "-----------------------------------------" << endl;
+        cout << (numThreads > 0 ? "OpenMP + MPI Implementation" : "MPI Implementation") << endl;
         cout << "Number of data points: " << total_numObjs << endl;
         cout << "Number of dimensions: " << numDims << endl;
         cout << "Number of processes: " << nproc << endl;
