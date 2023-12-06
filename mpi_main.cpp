@@ -58,6 +58,9 @@ int main(int argc, char **argv) {
         }
     }
 
+    // Update numObjs and numDims based on the dataset
+    read_file_name(filePath, numObjs, numDims);
+
     // Read and distribute data
     int divd, rem;
 
@@ -70,9 +73,6 @@ int main(int argc, char **argv) {
     for (int i=0; i < numObjs; i++) label[i] = -1;
 
     if (rank == 0) {
-
-        // Update numObjs and numDims based on the dataset
-        read_file_name(filePath, numObjs, numDims);
 
         // Read Dataset
         malloc2D(data, numObjs, numDims, double);
@@ -115,10 +115,6 @@ int main(int argc, char **argv) {
 
     // Set timing
     double stime = MPI_Wtime();
-
-    if (rank == 0) {
-        cout << "rank 0, num threads : " << numThreads << endl;
-    }
 
     // Implementation of Algorithm
     if (numThreads > 0) {
