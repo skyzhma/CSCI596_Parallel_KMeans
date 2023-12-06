@@ -74,7 +74,6 @@ int main(int argc, char **argv) {
     double stime = omp_get_wtime();
 
     // Implementation of Algorithm
-
     if (numThreads > 0){
         omp_set_num_threads(numThreads);
         omp(numClusters,
@@ -97,8 +96,10 @@ int main(int argc, char **argv) {
             centers
             );   
     }
-        
-    for (int i = 0; i < numClusters; i++) {
+    
+    double etime = omp_get_wtime();
+
+    for (int i = 0; i < 1; i++) {
         std::cout << i << " cetroid ";
         for (int j = 0; j < numDims; j ++) {
            std::cout << centers[i][j] << " ";
@@ -107,10 +108,12 @@ int main(int argc, char **argv) {
     }
 
     // Output
-    double etime = omp_get_wtime();
+    cout << "Number of data points: " << numObjs << endl;
+    cout << "Number of dimensions: " << numDims << endl;
+    cout << "Number of threads: " << numThreads << endl;
     cout << "Total time :" << etime - stime << endl;
 
-    // free memory
+    // Free memory
     free1D(label);
     free2D(data);
     free2D(centers);

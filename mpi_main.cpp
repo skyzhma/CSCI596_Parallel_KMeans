@@ -11,9 +11,10 @@ int main(int argc, char **argv) {
     int     opt;
     int     numClusters;          // number of clusters
     int     numThreads;           // number of threads
-    int     numObjs;              // number of data points 
+    int     numObjs;              // number of data points for each process
     int     numDims;              // number of vector dimensions
     int     maxIter;              // number of maximum iterations
+    int     total_numObjs;        // number of data points in total
     double  threshold;            // iteration threshold;
     int     *label;               // store the label of each data point
     double  **data;               // store the datasets
@@ -60,6 +61,7 @@ int main(int argc, char **argv) {
 
     // Update numObjs and numDims based on the dataset
     read_file_name(filePath, numObjs, numDims);
+    total_numObjs = numObjs;
 
     // Read and distribute data
     int divd, rem;
@@ -148,15 +150,22 @@ int main(int argc, char **argv) {
     // Set barrier
     if (rank == 0) {
 
-        for (int i = 0; i < numClusters; i++) {
+        double etime = MPI_Wtime();
+
+        // Print out the first centroid to make sure the results are consistent with other implementations
+        for (int i = 0; i < 1; i++) {
             std::cout << i << " cetroid ";
             for (int j = 0; j < numDims; j ++) {
             std::cout << clusters[i][j] << " ";
             }
             std::cout << endl;
         }
+
         // Output
-        double etime = MPI_Wtime();
+        cout << "Number of data points: " << total_numObjs << endl;
+        cout << "Number of dimensions: " << numDims << endl;
+        cout << "Number of processes: " << nproc << endl;
+        cout << "Number of threads: " << numThreads << endl;
         cout << "Total time :" << etime - stime << endl;
     }
 
