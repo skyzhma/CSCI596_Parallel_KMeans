@@ -13,7 +13,6 @@ void generate_data(string filePath, int numObjs, int numDims) {
 
     // Generate random doubleing-point numbers in the range [0.0, 1.0]
     uniform_real_distribution<double> doubleDistribution(-20, 20);
-    uniform_int_distribution intDistribution(-10, 10);
 
     // Open a file for writing
     string fileName = filePath;
@@ -72,16 +71,6 @@ void read_data(string filePath, double **data) {
 
         inputFile.close();
 
-        // Print the content of the 2D array
-        // for (int i = 0; i < numObjs; i++) {
-        //     for (int j = 0; j < numDims; j++) {
-        //         cout << data[i][j] << " ";
-        //     }
-        //     cout << endl;
-        // }
-
-        // free2D(data, numObjs);
-        
     } else {
         cerr << "Error opening the file for reading." << endl;
     }
