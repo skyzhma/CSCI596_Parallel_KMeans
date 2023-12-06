@@ -15,21 +15,22 @@ KMeans is a popular clustering algorithm used in unsupervised learning tasks. Su
 4. Repeat step 2 and 3 until the algorithm converages
 
 ## Parallelization
-In step 2, we need to devide the cloest centroid for each data points. Since the centroid are determined, we can create multiple threads and each thread will compute the distance for some data points at the same time. 
+In step 2, we can create multiple workers (processes or threads) and each worker will assign some data points to their cloest cluster.
 
-* Small Scale : We decide to use OpenMP to implement the parallelization. 
-* Large Scale : We decide to use MPI + OpenMP to parallelize the algorithm. The master will store the centroids and pass it to multiple workers. Each worker will handle a part of the dataset, compute the distance for each data point. Master and works will share the information of the centroids.
-
-We will randomly generate the datasets for training
+We plan to implement the following methods:
+* a sequential implementation without any parallelization
+* use OpenMP to implement the parallelization
+* use MPI to implement the parallelization
+* hybrid MPI+OpenMP parallelization implementation
 
 # Implementation
 
 ## Repository Structure
-- `data.cpp` : generate datasets randomly
 - `util.cpp` : utility functions
+- `data.cpp` : randomly generate datasets and use that to train the algorithm
 - `kmeans.cpp` : implementation of sequential and OpenMP KMeans algorithm
 - `mpi_kmeans.cpp` : implementation of MPI and hybrid MPI+OpenMP Kmeans algorithm
-- `kemans.sl` : slurm script
+- `kemans.sl` : slurm script submitted to CARC
  
 ## Dataset Generation
 ```
@@ -75,14 +76,19 @@ mpiexec -n ${number of processes} ./mpi_main -s {name of dataset} -t ${number of
 
 # use -k to specify the number of clusters
 ```
-## Running Jos on CARC
+## Running Jobs on CARC
 Modify the setting the submit the job
 ```
 sbatch kmeans.sl
 ```
 
 #  Results
-* Compare the performance of Sequential implementation with the OpenMP implementation with various size of dataset as input.
-* Compare the performance of OpenMP implementations with different number of thread settings.
-* Compare the performance of MPI+OpenMP implementation with different number of node settings and various size of datasets.
+* Compare the performance of sequential implementation with the OpenMP/MPI/Hybrid implementation with various size of dataset as input.
+* Compare the performance of OpenMP implementations with different number of threads.
+* Compare the performance of MPI implementations with different number of processes.
+* Compare the performance of hybrid implementation with different number of node setting and various size of datasets.
 
+
+## Authors
+
+If you have any questions, feel free to reach out via zhihaoma@usc.edu.
