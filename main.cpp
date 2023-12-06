@@ -10,7 +10,6 @@ int main(int argc, char **argv) {
     
     int     opt;
     int     numClusters;          // number of clusters
-    int     numNodes;             // number of nodes
     int     numThreads;           // number of threads
     int     numObjs;              // number of data points 
     int     numDims;              // number of vector dimensions
@@ -23,7 +22,6 @@ int main(int argc, char **argv) {
 
     // Default Values
     numClusters = 4;
-    numNodes = 0;
     numThreads = 0;
     numObjs = 10000;
     numDims = 64;
@@ -36,9 +34,6 @@ int main(int argc, char **argv) {
         switch (opt) {
             case 'k':
                 numClusters = atoi(optarg);
-                break;
-            case 'n':
-                numNodes = atoi(optarg);
                 break;
             case 't':
                 numThreads = atoi(optarg);
@@ -55,6 +50,9 @@ int main(int argc, char **argv) {
         }
     }
 
+    // Update numObjs and numDims based on the dataset
+    read_file_name(filePath, numObjs, numDims);
+
     // Initialize data
     malloc1D(label, numObjs, int);
     malloc2D(data, numObjs, numDims, double);
@@ -63,7 +61,6 @@ int main(int argc, char **argv) {
     for (int i=0; i < numObjs; i++) label[i] = -1;
 
     // Read Data
-    read_file_name(filePath, numObjs, numDims);
     read_data(filePath, data);
 
     // Initialize Centroids

@@ -51,7 +51,6 @@ void sequential(int numClusters,
             // Average the data points in the cluster
             for (int j=0; j < numDims; j++) {
                 localClusters[curLabel][j] += data[i][j];
-                // localClusters[curLabel][j] = (localClusters[curLabel][j] * localClusterSize[curLabel]  + data[i][j]) / (localClusterSize[curLabel] + 1);
             }
             localClusterSize[curLabel] += 1;
 
@@ -59,9 +58,6 @@ void sequential(int numClusters,
 
         // Compute delta distance and update centeroids
         for (int i = 0; i < numClusters; i++) {
-            
-            // delta += compute_euclid(numDims, centers[i], localClusters[i]); 
-
             for (int j = 0; j < numDims; j++) {
                 localClusters[i][j] /= localClusterSize[i];
                 centers[i][j] = localClusters[i][j];
@@ -89,11 +85,6 @@ void omp(int numClusters,
                 int *label,
                 double **data,
                 double **centers) {
-
-    // double **localClusters;
-    // int *localClusterSize;
-    // malloc2D(localClusters, numClusters, numDims, double);
-    // malloc1D(localClusterSize, numClusters, int);
 
     int      nthreads;             /* no. threads */
     int     *globalClusterSize;
@@ -151,12 +142,9 @@ void omp(int numClusters,
                 // Average the data points in the cluster
                 for (int j=0; j < numDims; j++) {
                     localClusters[tid][curLabel][j] += data[i][j];
-                    // localClusters[curLabel][j] = (localClusters[curLabel][j] * localClusterSize[curLabel]  + data[i][j]) / (localClusterSize[curLabel] + 1);
                 }
                 localClusterSize[tid][curLabel] += 1;
-
             }
-
         }
 
         // Compute delta distance and update centeroids
