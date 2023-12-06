@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <omp.h>
 #include "mpi_kmeans.h"
 #include "util.h"
 
@@ -28,8 +29,6 @@ int main(int argc, char **argv) {
     filePath = "data-1000-64.txt";
     maxIter = 500;
     threshold = .001;
-
-
 
     // Initialize MPI
     int     rank, nproc;
@@ -117,17 +116,37 @@ int main(int argc, char **argv) {
     // Set timing
     double stime = MPI_Wtime();
 
+    if (rank == 0) {
+        cout << "rank 0, num threads : " << numThreads << endl;
+    }
+
     // Implementation of Algorithm
-    mpi_kmeans(numClusters,
-            numObjs,
-            numDims,
-            maxIter,
-            threshold,
-            label,
-            data,
-            clusters,
-            MPI_COMM_WORLD
-            ); 
+    if (numThreads > 0) {
+        omp_set_num_threads(numThreads);
+        hybrid_kmeans(numClusters,
+        numObjs,
+        numDims,
+        maxIter,
+        threshold,
+        label,
+        data,
+        clusters,
+        MPI_COMM_WORLD
+        ); 
+
+    } else {
+        mpi_kmeans(numClusters,
+        numObjs,
+        numDims,
+        maxIter,
+        threshold,
+        label,
+        data,
+        clusters,
+        MPI_COMM_WORLD
+        ); 
+    }
+
 
     MPI_Barrier(MPI_COMM_WORLD);
     // Set barrier
