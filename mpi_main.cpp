@@ -160,6 +160,7 @@ int main(int argc, char **argv) {
         cout << (numThreads > 0 ? "OpenMP + MPI Implementation" : "MPI Implementation") << endl;
         cout << "Number of data points: " << total_numObjs << endl;
         cout << "Number of dimensions: " << numDims << endl;
+        cout << "Number of clusters: " << numClusters << endl;
         cout << "Number of processes: " << nproc << endl;
         cout << "Number of threads: " << numThreads << endl;
         cout << "Total time :" << etime - stime << endl;
