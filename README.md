@@ -89,6 +89,21 @@ sbatch kmeans.sl
 ## OpenMP
 ![res2](./results/OpenMP.png)
 
+## OpenMP + MPI
+![res3](./results/OpenMP_MPI.png)
+
+## OpenMP + MPI (data size)
+![res4](./results/OpenMP_MPI_dataSize.png)
+
+## OpenMP + MPI (threads)
+![res5](./results/OpenMP_MPI_threads.png)
+
+
 ## Authors
+Zhihao Ma : Code
+
+Jie Zhao : Results
+
+These two authors contributed equally.
 
 If you have any questions, feel free to reach out via zhihaoma@usc.edu.
