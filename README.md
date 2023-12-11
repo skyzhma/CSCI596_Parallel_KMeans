@@ -83,11 +83,11 @@ sbatch kmeans.sl
 ```
 
 #  Results
-* Compare the performance of sequential implementation with the OpenMP/MPI/Hybrid implementation with various size of dataset as input.
-* Compare the performance of OpenMP implementations with different number of threads.
-* Compare the performance of MPI implementations with different number of processes.
-* Compare the performance of hybrid implementation with different number of node setting and various size of datasets.
+## Sequential + OpenMP
+![res1](./results/Sequential+OpenMP.png)
 
+## OpenMP
+![res2](./results/OpenMP.png)
 
 ## Authors
 
