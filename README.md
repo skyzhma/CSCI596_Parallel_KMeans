@@ -93,7 +93,7 @@ sbatch kmeans.sl
 ![res3](./results/OpenMP_MPI.png)
 
 ## OpenMP + MPI (data size)
-![res4](./results/OpenMP_MPI_dataSize.png)
+![res4](./results/datasize.png)
 
 ## OpenMP + MPI (threads)
 ![res5](./results/OpenMP_MPI_threads.png)
